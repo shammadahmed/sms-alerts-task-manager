@@ -91,7 +91,6 @@
 
     const tasks = tasksReq.data;
     const projects = projectsReq.data;
-    projects.value.push({title: 'Inbox', id: Math.random().toString(36).slice(2), tasks: []})
 
     projects.value.forEach(project => project.tasks = tasks.value.filter(task => task.project._id === project.id));
 
