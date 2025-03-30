@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     components: true,
     app: {
         head: {
+            title: 'Task Manager',
             htmlAttrs: {
                 lang: 'en',
             },
