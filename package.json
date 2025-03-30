@@ -4,7 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "bcms --pull types --lng ts && nuxt build",
-        "dev": "nuxt dev",
+        "dev": "bcms --pull types --lng ts && nuxt dev",
         "generate": "bcms --pull types --lng ts && nuxt generate",
         "preview": "bcms --pull types --lng ts && nuxt preview",
         "postinstall": "bcms --pull types --lng ts && nuxt prepare"

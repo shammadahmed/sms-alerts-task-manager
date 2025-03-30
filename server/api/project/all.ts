@@ -6,21 +6,16 @@ export type ProjectsResponse = ProjectEntryMeta & {
 };
 
 export default defineEventHandler(async () => {
-    try {
-        const projects = (await bcms.entry.getAll('project')) as ProjectEntry[];
+    const projects = (await bcms.entry.getAll('project')) as ProjectEntry[];
 
-        const res: ProjectsResponse = projects.map((project: ProjectEntryMetaItem) => {
-            let id = project._id
+    const res: ProjectsResponse = projects.map((project: ProjectEntryMetaItem) => {
+        let id = project._id
 
-            project = project.meta.en as ProjectEntryMeta;
-            project.id = id;
+        project = project.meta.en as ProjectEntryMeta;
+        project.id = id;
 
-            return project
-        });
+        return project
+    });
 
-        return res;
-
-    } catch (err) {
-        console.log(err.message)
-    }
+    return res;
 });

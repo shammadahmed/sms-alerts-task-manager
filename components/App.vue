@@ -10,7 +10,7 @@
                         :id="project.id"
                         :title="project.title"
                         :tasks="project.tasks"
-                        @changeSelectedProject="selectedProject=project.id"
+                        @changeSelectedProject="changeCurrentProject(project)"
                         @deleteProject="removeProject(project.id)"
                      />
                 </ul>
@@ -83,10 +83,25 @@
     let newPriority = ref('P3');
     let newDueDate = ref();
     let newProjectName = ref('');
-    let tasks = ref((await useFetch<TasksResponse>('/api/task/all')).data.value);
-    let projects = ref((await useFetch<ProjectsResponse>('/api/project/all')).data.value);
+
+    const [tasksReq, projectsReq] = await Promise.all([ 
+        useFetch<TasksResponse>('/api/task/all'),
+        useFetch<ProjectsResponse>('/api/project/all')
+    ]);
+
+    const tasks = tasksReq.data;
+    const projects = projectsReq.data;
+
     projects.value.forEach(project => project.tasks = tasks.value.filter(task => task.project._id === project.id));
+    
     let selectedProject = ref(projects.value[0].id);
+
+    const title = useAppConfig().title;
+
+    useHead({
+        title: projects.value[0].title + ' | ' + title
+    })
+
 
     const removeProject = projectId => {
         projects.value.splice(projects.value.indexOf(projects.value.find(p => p.id === projectId)), 1);
@@ -103,12 +118,24 @@
         );
     };
 
+    const changeCurrentProject = project => {
+        selectedProject.value = project.id;
+
+        useHead({
+            title: project.title + ' | ' + title
+        });
+    };
+
     const addProject = async () => {
         projectAddInput.value = !projectAddInput.value;
 
         projects.value.push({title: newProjectName, id: Math.random().toString(36).slice(2), tasks: []});
 
         selectedProject.value = projects.value[projects.value.length - 1].id;
+
+        useHead({
+            title: newProjectName.value + ' | ' + title
+        })
 
         await $fetch('/api/project/create', {
             method: 'POST',
