@@ -8,18 +8,20 @@ export type TasksResponse = TaskEntryMetaItem & {
 
 export default defineEventHandler(async () => {
     try {
-    const tasks = (await bcms.entry.getAll('task')) as TaskEntry[];
+        const tasks = (await bcms.entry.getAll('task')) as TaskEntry[];
 
-} catch (err) {console.log(err.message);}
+        const res: TasksResponse = tasks.map((task: TaskEntryMeta) => {
+            let id = task._id
 
-    const res: TasksResponse = tasks.map((task: TaskEntryMeta) => {
-        let id = task._id
+            task = task.meta.en as TaskEntryMetaItem;
+            task.id = id;
 
-        task = task.meta.en as TaskEntryMetaItem;
-        task.id = id;
+            return task;
+        });
 
-        return task;
-    });
+        return res;
 
-    return res;
+    } catch (err) {
+        console.log(err.message)
+    }
 });
