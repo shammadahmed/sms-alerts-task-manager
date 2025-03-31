@@ -1,4 +1,3 @@
-import { ClientConfig } from '@thebcms/client';
 import { bcms } from '~/bcms-client';
 import type { TaskEntry, TaskEntryMeta, TaskEntryMetaItem } from '~/bcms/types/ts';
 

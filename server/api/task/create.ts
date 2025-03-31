@@ -1,5 +1,6 @@
 import { EntryParsedCreateData } from '@thebcms/client';
 import { bcms } from '~/bcms-client';
+import { TaskEntryMetaItemPriority } from '~/bcms/types/ts';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
@@ -17,7 +18,7 @@ export default defineEventHandler(async (event) => {
                         timezoneOffset: body.due_date.timezoneOffset
                     },
                     complete: body.complete,
-                    priority: body.priority,
+                    priority: body.priority as TaskEntryMetaItemPriority,
                     project: {
                         entryId: body.projectId,
                         templateId: '67c8fd885ab1d0bab17d107f'
