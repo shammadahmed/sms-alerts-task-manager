@@ -43,7 +43,7 @@
 	const deleteProject = async () => {
 		await $fetch('/api/project/delete', {
         method: 'DELETE',
-        header: {},
+        headers: {},
         body: {
           projectId: id.value
         }
