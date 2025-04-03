@@ -1,5 +1,5 @@
 <template>
-	<li @mouseover="projectHover=true" @mouseleave="projectHover=false" @click="$emit('changeSelectedProject')" @dblclick="showInput" v-show="!projectEditInput">
+	<li @mouseover="projectHover=true" @mouseleave="projectHover=false" @click="$emit('changeSelectedProject')" @dblclick="showInput" v-show="!projectEditInput" :class="{'cursor-pointer': projectHover}">
 		{{title}} ({{tasks.length}})
 		<span v-show="projectHover" class="ml-[10px] text-[11px] text-sky-700 border-[1px] border-gray-200 px-1 rounded" @click="deleteProject">&#10060;</span>
 	</li>

@@ -16,7 +16,7 @@
                 </ul>
             </div>
             <div class="mt-[20px]">
-                <button @click="projectAddInput=!projectAddInput" class="btn" v-show="!projectAddInput">New project</button>
+                <button @click="showInput" class="btn" v-show="!projectAddInput">New project</button>
                 <form @submit.prevent="addProject" name="project-add">
                     <input placeholder="Project name" class="w-[70%]" required
                            v-model="newProjectName"
@@ -77,6 +77,7 @@
     import type { TaskEntryMetaItem } from '~/bcms/types/ts';
 
     let projectAddInput = ref(false);
+    let projectAdd = ref(null);
     let taskAddForm = ref(false);
     let newTitle = ref('');
     let newDescription = ref('');
@@ -102,6 +103,13 @@
         title: projects.value[0].title + ' | ' + title
     })
 
+    const showInput = async () => {
+        projectAddInput.value = !projectAddInput.value;
+
+        await nextTick();
+
+        projectAdd.value.focus();
+    }
 
     const removeProject = projectId => {
         projects.value.splice(projects.value.indexOf(projects.value.find(p => p.id === projectId)), 1);

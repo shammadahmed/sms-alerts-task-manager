@@ -1,5 +1,5 @@
 <template>
-	<section class="pb-[20px] border-t-[1px]" :class="complete ? 'opacity-30' : ''" @dblclick="taskEditForm=!taskEditForm" v-show="!taskEditForm"  @mouseover="taskHover=true" @mouseleave="taskHover=false">
+	<section class="pb-[20px] border-t-[1px]" :class="{'opacity-30': complete, 'cursor-pointer': taskHover}" @dblclick="taskEditForm=!taskEditForm" v-show="!taskEditForm"  @mouseover="taskHover=true" @mouseleave="taskHover=false">
 		<h3 class="task-title mt-[15px] font-bold text-slate-700">
 			<input class="task-complete ml-[-28px] mr-[10px]" type="checkbox" @input="complete=!complete; updateTask()" :checked="complete">
 			{{title}}
